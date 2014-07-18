@@ -31,7 +31,7 @@ module Medjay
 
     def component
       @component ||= components.detect { |hash|
-        hash['name'].downcase == json['description'][/\A[a-z]+/]
+        hash['name'].downcase == json['checkname'][/\A[a-z]+/]
       }
     end
 
