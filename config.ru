@@ -7,6 +7,7 @@ module Medjay
     URI         = ENV['STATUSPAGE_API_URI'] || 'https://api.statuspage.io'
     OAUTH_TOKEN = ENV['STATUSPAGE_OAUTH_TOKEN']
     PAGE_ID     = ENV['STATUSPAGE_PAGE_ID']
+    PATH        = ENV['MEDJAY_PATH']
 
     def self.call(env)
       new(env).call
@@ -17,6 +18,8 @@ module Medjay
     end
 
     def call
+      return [404, {}, ['Not Found']] unless request.path == "/#{PATH}"
+
       connection.patch "/v1/pages/#{PAGE_ID}/components/#{component['id']}.json", "component[status]=#{status}" if component
 
       [200, {'Content-Type' => 'text/plain'}, ['OK']]
