@@ -18,7 +18,7 @@ module Medjay
     end
 
     def call
-      return [404, {}, ['Not Found']] unless request.path == "/#{PATH}"
+      return [200, {}, ['Medjay']] unless request.path == "/#{PATH}"
 
       connection.patch "/v1/pages/#{PAGE_ID}/components/#{component['id']}.json", "component[status]=#{status}" if component
 
