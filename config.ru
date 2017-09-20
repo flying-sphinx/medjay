@@ -1,65 +1,16 @@
-require 'rack'
-require 'json'
-require 'faraday'
+require "rubygems"
+require "bundler"
 
-module Medjay
-  class Request
-    URI         = ENV['STATUSPAGE_API_URI'] || 'https://api.statuspage.io'
-    OAUTH_TOKEN = ENV['STATUSPAGE_OAUTH_TOKEN']
-    PAGE_ID     = ENV['STATUSPAGE_PAGE_ID']
-    PATH        = ENV['MEDJAY_PATH']
+Bundler.setup :default
+$:.unshift File.dirname(__FILE__) + "/lib"
 
-    def self.call(env)
-      new(env).call
-    end
+require "medjay"
 
-    def initialize(env)
-      @env = env
-    end
-
-    def call
-      return [200, {}, ['Medjay']] unless request.path == "/#{PATH}"
-
-      connection.patch "/v1/pages/#{PAGE_ID}/components/#{component['id']}.json", "component[status]=#{status}" if component
-
-      [200, {'Content-Type' => 'text/plain'}, ['OK']]
-    end
-
-    private
-
-    attr_reader :env
-
-    def component
-      @component ||= components.detect { |hash|
-        hash['name'].downcase == json['checkname'][/\A[a-z]+/]
-      }
-    end
-
-    def components
-      JSON.parse connection.get("/v1/pages/#{PAGE_ID}/components.json").body
-    end
-
-    def connection
-      @connection ||= Faraday.new(:url => URI) do |faraday|
-        faraday.request  :url_encoded
-        faraday.response :logger
-        faraday.adapter  Faraday.default_adapter
-        faraday.headers = {'Authorization' => "OAuth #{OAUTH_TOKEN}"}
-      end
-    end
-
-    def json
-      @json ||= JSON.parse request.params['message']
-    end
-
-    def request
-      Rack::Request.new env
-    end
-
-    def status
-      (json['action'] == 'assign') ? 'major_outage' : 'operational'
-    end
-  end
-end
-
-run Medjay::Request
+run Medjay::App.new(
+  :path        => ENV["MEDJAY_PATH"],
+  :status_page => {
+    :uri     => ENV["STATUSPAGE_API_URI"],
+    :token   => ENV["STATUSPAGE_OAUTH_TOKEN"],
+    :page_id => ENV["STATUSPAGE_PAGE_ID"]
+  }
+)
