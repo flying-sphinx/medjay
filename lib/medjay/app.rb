@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Medjay::App
   attr_reader :path, :status_page
 

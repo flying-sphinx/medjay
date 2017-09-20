@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Medjay::Request
   def self.call(status_page, request)
     new(status_page, request).call

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Medjay::StatusPage
   attr_reader :uri, :token, :page_id
 
