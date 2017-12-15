@@ -1,8 +1,8 @@
 source "https://rubygems.org"
 
-ruby "2.4.2"
+ruby "2.4.3"
 
-gem "rack",    "~> 1.6"
+gem "rack",    "~> 2.0"
 gem "oj"
 gem "faraday", "~> 0.9.0"
 gem "thin",    "~> 1.7"
