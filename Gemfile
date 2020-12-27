@@ -1,11 +1,11 @@
 source "https://rubygems.org"
 
-ruby "2.6.3"
+ruby "2.7.2"
 
 gem "rack",    "~> 2.1"
 gem "oj"
-gem "faraday", "~> 0.9.0"
-gem "thin",    "~> 1.7"
+gem "faraday", "~> 1.0"
+gem "thin",    "~> 1.8"
 
 group :test do
   gem "rack-test"
