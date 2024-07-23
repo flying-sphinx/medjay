@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "~> 2.7.3"
+ruby :file => ".tool-versions"
 
 gem "rack",    "~> 2.2"
 gem "oj"
