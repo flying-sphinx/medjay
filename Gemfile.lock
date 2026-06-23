@@ -3,7 +3,7 @@ GEM
   specs:
     addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
-    bigdecimal (3.1.8)
+    bigdecimal (4.1.2)
     crack (1.0.0)
       bigdecimal
       rexml
@@ -21,8 +21,10 @@ GEM
     logger (1.7.0)
     net-http (0.9.1)
       uri (>= 0.11.1)
-    oj (3.16.4)
+    oj (3.17.3)
       bigdecimal (>= 3.0)
+      ostruct (>= 0.2)
+    ostruct (0.6.3)
     public_suffix (7.0.5)
     rack (2.2.23)
     rack-test (2.1.0)
